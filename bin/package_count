@@ -1,0 +1,3 @@
+#!/bin/bash
+
+echo "Package count: " && pacman -Qq | wc -l

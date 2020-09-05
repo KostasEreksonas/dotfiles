@@ -1,0 +1,17 @@
+#!/bin/bash
+
+# sysinfo_page - A script to produce a html file
+
+cat <<- _EOF_
+echo "<html>
+ <head>
+  <title>
+   The title of your page
+  </title>
+ </head>
+
+ <body>
+   Your page content goes here.
+ </body>
+</html>"
+_EOF_
