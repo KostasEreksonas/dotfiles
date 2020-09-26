@@ -1,0 +1,20 @@
+#!/bin/bash
+
+DIR1=$PWD/A
+DIR2=$PWD/B
+
+if [[ ! -d $DIR1 ]]; then
+	mkdir $PWD/A
+fi
+
+if [[ ! -d $DIR2 ]]; then
+	mkdir $PWD/B
+fi
+
+touch $DIR1/data.txt
+
+echo "Test 88" >> $DIR1/data.txt
+echo "Test2 90" >> $DIR1/data.txt
+
+cp $DIR1/data.txt $DIR2/data.txt
+mv $DIR2/data.txt $DIR2/data_updated.txt
