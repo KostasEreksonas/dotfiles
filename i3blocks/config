@@ -1,0 +1,98 @@
+# i3blocks configuration file
+#
+# The i3blocks man page describes the usage of the binary,
+# and its website describes the configuration:
+#
+#     https://vivien.github.io/i3blocks
+
+
+# Global properties
+separator=true
+separator_block_width=20
+
+[wifi]
+#label=WIFI
+label= 
+instance=wlp3s0
+interface=wlp3s0
+interval=1
+command=~/.config/i3blocks/scripts/wifi/wifi
+
+[ssid]
+#label=SSID 
+instance=wlp3s0
+interface=wlp3s0
+interval=60
+command=~/.config/i3blocks/scripts/ssid/ssid
+
+[bandwidth]
+#label=BANDWIDTH 
+label=  
+interface=wlp3s0
+interval=persist
+command=~/.config/i3blocks/scripts/bandwidth3/bandwidth3
+
+[cpu_usage]
+#label=CPU 
+label= 
+instance=Master
+interval=1
+signal=10
+command=~/.config/i3blocks/scripts/cpu_usage/cpu_usage
+
+[cpu_temp]
+#label=TEMP 
+label= 
+interval=1
+command=~/.config/i3blocks/scripts/temperature/temperature 
+
+#[gpu_stats]
+#label=NVSTATS 
+#label= 
+#interval=1
+#min_width=GPU 100% MEM 100% PCI 100%
+#align=center
+#command=~/.config/i3blocks/scripts/gpu-load/gpu-load
+
+#[gpu_temp]
+#label=NVTEMP 
+#label= GPU 
+#interval=1
+#min_width=100%
+#align=center
+#command=~/.config/i3blocks/scripts/gpu-temp/gpu-temp
+
+[memory]
+#label=MEM 
+label= 
+instance=Master
+interval=1
+command=~/.config/i3blocks/scripts/memory/memory
+
+[brightness]
+#label=BRI
+label= 
+instance=Master
+interval=60
+signal=10
+command=~/.config/i3blocks/scripts/backlight/backlight
+
+[volume]
+#label=VOL
+label= 
+instance=Master
+interval=60
+signal=10
+command=~/.config/i3blocks/scripts/volume/volume 2 pulse
+
+[battery]
+#label=BAT 
+label= 
+instance=Master
+interval=1
+command=~/.config/i3blocks/scripts/battery/battery
+
+[time]
+label=  
+command=echo "`date +'%a %d %b'` `date +'%T'`"; [[ -z "${BLOCK_BUTTON}" ]] || gsimplecal &
+interval=1
