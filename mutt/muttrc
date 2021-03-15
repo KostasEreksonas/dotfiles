@@ -1,0 +1,30 @@
+# ------------- IMAP for recieving mail -------------
+set imap_user="kostas2e@gmail.com"
+set imap_pass=qukdzdhxvcbizmgm
+set folder="imaps://imap.gmail.com:993/"
+# set folder="~/Mail/gmail"				#Load locally saved E-mails instead of retrieving them from gmail server
+# ------------- MAILBOXES ---------------------------
+set record="+Sent"
+set trash="+Trash"
+set postponed="+Drafts"
+set spoolfile="+INBOX"
+mailboxes =INBOX =Sent =Trash =Drafts
+
+
+# ------------- SMTP for sending mail ---------------
+set smtp_url="smtp://kostas2e@gmail.com@smtp.gmail.com:587/"
+set smtp_pass=$imap_pass
+set ssl_force_tls=yes	# Require encrypted connection
+
+# ------------- NAME --------------------------------
+set from="kostas2e@gmail.com"
+set realname="Kostas Ereksonas"
+set use_from=yes
+
+# ------------- Composing emails --------------------
+set editor="vim"		# Editor for composing emails
+set edit_headers=yes	# Viewing headers during editing
+set charset=UTF-8		# Charset of composed emails
+
+# ------------- Colours -----------------------------
+source colour.muttrc
