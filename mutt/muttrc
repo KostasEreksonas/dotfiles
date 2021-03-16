@@ -1,6 +1,6 @@
 # ------------- IMAP for recieving mail -------------
 set imap_user="kostas2e@gmail.com"
-set imap_pass=qukdzdhxvcbizmgm
+set imap_pass=PASSWORD
 set folder="imaps://imap.gmail.com:993/"
 # set folder="~/Mail/gmail"				#Load locally saved E-mails instead of retrieving them from gmail server
 # ------------- MAILBOXES ---------------------------
