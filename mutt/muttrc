@@ -20,7 +20,7 @@ mailboxes = +INBOX +[Gmail]/Drafts +[Gmail]/Important +[Gmail]/Sent\ Mail +[Gmai
 set smtp_url="smtp://kostas2e@gmail.com@smtp.gmail.com:587/"
 set smtp_pass=$imap_pass
 
-# ------------- Encryotion --------------------------
+# ------------- Encryption --------------------------
 set ssl_starttls=yes
 set ssl_force_tls=yes	# Require encrypted connection
 
