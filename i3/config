@@ -32,8 +32,8 @@ exec --no-startup-id nm-applet
 
 # Use pactl to adjust volume in PulseAudio.
 set $refresh_i3status killall -SIGUSR1 i3status
-bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +2% && $refresh_i3blocks
-bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -2% && $refresh_i3blocks
+bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +5% && $refresh_i3blocks
+bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -5% && $refresh_i3blocks
 bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle && $refresh_i3blocks
 bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle && $refresh_i3blocks
 
@@ -177,17 +177,17 @@ bindsym $mod+r mode "resize"
 # Set colors for the workspaces
 
 set $bg-color				#2f343f
-set $inactive-bg-color		#2f343f
-set $urgent-bg-color		#E53935
+set $inactive-bg-color			#2f343f
+set $urgent-bg-color			#E53935
 set $text-color				#f3f4f5
-set $inactive-text-color	#676E7D
+set $inactive-text-color		#676E7D
 set $indicator				#757575
 
-# Class					Border					Background				Text					Indicator
+# Class				Border					Background				Text					Indicator
 client.focused			$bg-color				$bg-color				$text-color				$indicator
-client.unfocused		$inactive-bg-color		$inactive-bg-color		$inactive-text-color	$indicator
-client.focused_inactive	$inactive-bg-color		$inactive-bg-color		$inactive-text-color	$indicator
-client.urgent			$urgent-bg-color		$urgent-bg-color		$text-color				$indicator
+client.unfocused		$inactive-bg-color			$inactive-bg-color			$inactive-text-color			$indicator
+client.focused_inactive		$inactive-bg-color			$inactive-bg-color			$inactive-text-color			$indicator
+client.urgent			$urgent-bg-color			$urgent-bg-color			$text-color				$indicator
 
 hide_edge_borders both
 
@@ -199,14 +199,14 @@ bar {
 	colors {
 		background $bg-color
 		separator #757575
-		# Class				Border				Background			Text
-		focused_workspace	$bg-color			$bg-color			$text-color
+		# Class			Border			Background		Text
+		focused_workspace	$bg-color		$bg-color		$text-color
 		inactive_workspace	$inactive-bg-color	$inactive-bg-color	$inactive-text-color
 		urgent_workspace	$urgent-bg-color	$urgent-bg-color	$text-color
 	}
 }
 
-#-----------------------------------------------USERMODS-------------------------------------------------------
+# -----------------------------------------------USERMODS-------------------------------------------------------
 
 # Laptop screen brightness control
 bindsym XF86MonBrightnessUp exec --no-startup-id xbacklight -inc 5
@@ -240,10 +240,13 @@ bindsym $mod+i exec --no-startup-id optimus-manager --no-confirm --switch intel
 exec --no-startup-id picom -b --config /home/kostas/.config/picom/picom.conf
 
 # Take a screenshot with PrintScreen and save in specified folder
-bindsym Print exec --no-startup-id maim -i $(xdotool getactivewindow) -B /home/kostas/Photos/Screenshots/$(date +"%Y-%m-%d_%H-%M-%S").png && notify-send "Screenshot made!" "Screenshot saved at /home/kostas/Photos/Screenshots/$(date +"%Y-%m-%d_%H-%M-%S").png"
+bindsym Print exec --no-startup-id maim -i $(xdotool getactivewindow) -B ~/Photos/Screenshots/$(date +"%Y-%m-%d_%H-%M-%S").png && notify-send "Screenshot made!" "Screenshot saved at ~/Photos/Screenshots/$(date +"%Y-%m-%d_%H-%M-%S").png"
 
 # Copy screenshot to clipboard with Shift + PrintScreen
 bindsym Shift+Print exec --no-startup-id maim -s -u | xclip -selection clipboard -t image/png -i
+
+# Save copied clipboard to an image file with Shift + S
+bindsym $mod+Print exec --no-startup-id xclip -selection clipboard -t image/png -o > ~/Photos/Screenshots/$(date +"%Y-%m-%d_%H-%M-%S").png && notify-send "Screenshot made!" "Screenshot saved at ~/Photos/Screenshots/$(date +"%Y-%m-%d_%H-%M-%S").png"
 
 # Power options
 set $Locker i3lock -i /usr/share/pixmaps/lock_screen.png -t
@@ -255,7 +258,7 @@ mode "$mode_system" {
     bindsym s exec --no-startup-id $Locker && systemctl suspend, mode "default"
     bindsym h exec --no-startup-id $Locker && systemctl hibernate, mode "default"
     bindsym r exec --no-startup-id systemctl reboot, mode "default"
-    bindsym Shift+s exec --no-startup-id systemctl poweroff -i, mode "default"  
+    bindsym Shift+s exec --no-startup-id systemctl poweroff -i, mode "default"
 
     # back to normal: Enter or Escape
     bindsym Return mode "default"
