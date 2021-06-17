@@ -1,4 +1,11 @@
+# Keyboard layout
 setxkbmap -model pc105 -layout us,lt -option grp:alt_shift_toggle &
+
+# Desktop background image
 feh --bg-fill /usr/share/pixmaps/background.jpg &
+
+# Automatic mount of connected usb devices
 udiskie &
+
+# Picom compositor for transparency effects
 picom -b --config /home/kostas/.config/picom/picom.conf
