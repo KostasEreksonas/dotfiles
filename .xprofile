@@ -11,3 +11,8 @@ udiskie &
 
 # Picom compositor for transparency effects
 picom -b --config /home/kostas/.config/picom/picom.conf
+
+# Loop for autostarting dwm after quitting with Mod + Shift + Q
+#while true; do
+	#dwm >/dev/null 2>&1
+#done
