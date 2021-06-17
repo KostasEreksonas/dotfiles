@@ -213,16 +213,16 @@ bindsym XF86MonBrightnessUp exec --no-startup-id xbacklight -inc 5
 bindsym XF86MonBrightnessDown exec --no-startup-id xbacklight -dec 5
 
 # Switch keyboard layouts between US & LT
-exec --no-startup-id setxkbmap -model pc105 -layout us,lt -option grp:alt_shift_toggle &
+# exec --no-startup-id setxkbmap -model pc105 -layout us,lt -option grp:alt_shift_toggle &
 
 # Set desktop background
-exec --no-startup-id feh --bg-fill /usr/share/pixmaps/background.jpg &
+# exec --no-startup-id feh --bg-fill /usr/share/pixmaps/background.jpg &
 
 # Calendar pop-up when date is pressed on i3bar
 for_window [class="(?i)gsimplecal"] floating enable, move position mouse, move up 23 px
 
 # Automount removable media with udiskie
-exec --no-startup-id udiskie &
+# exec --no-startup-id udiskie &
 
 # Extend two monitors with Nvidia GPU
 exec --no-startup-id xrandr --output eDP-1-1 --auto --output DP-1-1 --right-of eDP-1-1 --auto &
@@ -237,7 +237,7 @@ bindsym $mod+n exec --no-startup-id optimus-manager --no-confirm --switch nvidia
 bindsym $mod+i exec --no-startup-id optimus-manager --no-confirm --switch intel
 
 # Composite extension for X for additional visual effects
-exec --no-startup-id picom -b --config /home/kostas/.config/picom/picom.conf
+# exec --no-startup-id picom -b --config /home/kostas/.config/picom/picom.conf
 
 # Take a screenshot with PrintScreen and save in specified folder
 bindsym Print exec --no-startup-id maim -i $(xdotool getactivewindow) -B ~/Photos/Screenshots/$(date +"%Y-%m-%d_%H-%M-%S").png && notify-send "Screenshot made!" "Screenshot saved at ~/Photos/Screenshots/$(date +"%Y-%m-%d_%H-%M-%S").png"

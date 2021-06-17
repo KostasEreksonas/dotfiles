@@ -1,3 +1,4 @@
-xrandr --newmode 1920x1080 172.80  1920 2040 2248 2576  1080 1081 1084 1118  -HSync +Vsync
-xrandr --addmode Virtual1 1920x1080
-xrandr --output Virtual1 --mode 1920x1080
+setxkbmap -model pc105 -layout us,lt -option grp:alt_shift_toggle &
+feh --bg-fill /usr/share/pixmaps/background.jpg &
+udiskie &
+picom -b --config /home/kostas/.config/picom/picom.conf
