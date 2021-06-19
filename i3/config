@@ -227,7 +227,7 @@ for_window [class="(?i)gsimplecal"] floating enable, move position mouse, move u
 # Extend two monitors with Nvidia GPU
 exec --no-startup-id xrandr --output eDP-1-1 --auto --output DP-1-1 --right-of eDP-1-1 --auto &
 
-# Activate connected displays and move workspaces from disconnected ones
+# Extend to connected displays and move workspaces from disconnected ones
 bindsym $mod+z exec --no-startup-id xrandr --output eDP-1 --auto --output DP-1 --right-of eDP-1 --auto --output eDP-1-1 --auto --output DP-1-1 --right-of eDP-1-1 --auto
 
 # Switch to Nvidia GPU
