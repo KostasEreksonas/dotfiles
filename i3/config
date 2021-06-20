@@ -245,7 +245,7 @@ bindsym Print exec --no-startup-id maim -i $(xdotool getactivewindow) -B ~/Photo
 # Copy screenshot to clipboard with Shift + PrintScreen
 bindsym Shift+Print exec --no-startup-id maim -s -u | xclip -selection clipboard -t image/png -i
 
-# Save copied clipboard to an image file with Shift + S
+# Save copied clipboard to an image file with MOD + PrintScreen
 bindsym $mod+Print exec --no-startup-id xclip -selection clipboard -t image/png -o > ~/Photos/Screenshots/$(date +"%Y-%m-%d_%H-%M-%S").png && notify-send "Screenshot made!" "Screenshot saved at ~/Photos/Screenshots/$(date +"%Y-%m-%d_%H-%M-%S").png"
 
 # Power options
