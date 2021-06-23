@@ -3,6 +3,7 @@
 Table of Contents
 =================
 * [My custom i3 window manager configuration](#My-custom-i3-window-manager-configuration)
+* [Extending functionality](#Extending-functionality)
 * [Power options](#Power-options)
 * [Custom keybindings](#Custom-keybindings)
 
