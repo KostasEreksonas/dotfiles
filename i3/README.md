@@ -22,6 +22,7 @@ There I will list the commands that I have added to my i3wm config file to get a
 
 For controlling power options, like ***suspend***, ***reboot*** and ***shutdown***, among other things. This config snippet was taken from ***Arch wiki*** and slightly modified for my use case:
 
+```
 set $Locker i3lock -i /usr/share/pixmaps/lock_screen.png -t
 
 set $mode_system System (l) lock, (e) logout, (s) suspend, (h) hibernate, (r) reboot, (Shift+s) shutdown
@@ -39,6 +40,7 @@ mode "$mode_system" {
 }
 
 bindsym $mod+Pause mode "$mode_system"
+```
 
 # Custom keybindings
 
