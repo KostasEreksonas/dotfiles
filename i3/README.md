@@ -20,7 +20,7 @@ There I will list the commands that I have added to my i3wm config file to get a
 
 # Power options
 
-For controlling power options, like ***suspend***, ***reboot*** and ***shutdown***, among other things. This config snippet was taken from ***Arch wiki*** and slightly modified for my use case:
+For controlling power options, like ***suspend***, ***reboot*** and ***shutdown***, among other things. This config snippet was taken from ***[Arch wiki](https://wiki.archlinux.org/title/i3#Shutdown,_reboot,_lock_screen)*** and slightly modified for my use case:
 
 ```
 set $Locker i3lock -i /usr/share/pixmaps/lock_screen.png -t
