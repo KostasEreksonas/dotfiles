@@ -8,7 +8,14 @@
 alias ls='ls --color=auto'
 PS1='[\u@\h \W]\$ '
 
+export PS1="\[$(tput bold)\]\[$(tput setaf 1)\][\[$(tput setaf 3)\]\u\[$(tput setaf 2)\]@\[$(tput setaf 4)\]\h \[$(tput setaf 5)\]\W\[$(tput setaf 1)\]]\[$(tput setaf 7)\]\\$ \[$(tput sgr0)\]"
+
 RANGER_LOAD_DEFAULT_RC=FALSE
 
+# Aliases
 alias blthon='systemctl start bluetooth.service'
 alias blthoff='systemctl stop bluetooth.service'
+
+# Games
+alias sniperelite3='cd ~/Wine/SniperElite3/drive_c/Program\ Files\ \(x86\)/Sniper\ Elite\ 3/bin/ && WINEPREFIX=~/Wine/SniperElite3/ WINEARCH=win64 mangohud --dlsym wine SniperElite3.exe'
+alias nba2k19='cd ~/Wine/NBA2K19/drive_c/Program\ Files/NBA\ 2K19/ && WINEPREFIX=~/Wine/NBA2K19/ WINEARCH=win64 mangohud --dlsym wine NBA2K19.exe'
