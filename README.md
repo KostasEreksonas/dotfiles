@@ -17,5 +17,5 @@ In this section I will list the programs for which I have configs in this reposi
 * [Neomutt](../main/mutt/) - e-mail client operating within the command line interface.
 * [Newsboat](../main/newsboat_config/) - RSS/Atom feed reader.
 * [Picom](../main/picom/) - compositor for Xorg.
-* [Ranger](../main/ranger/) - file manager operating within the command line interface.
-* [Vim](../main/.vimrc) - text editor operating within the command line interface.
+* [Ranger](../master/ranger/) - file manager operating within the command line interface.
+* [Vim](../master/.vimrc) - text editor operating within the command line interface.
