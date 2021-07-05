@@ -20,10 +20,10 @@ alias blthon='systemctl start bluetooth.service'
 alias blthoff='systemctl stop bluetooth.service'
 
 # Connect to wifi
-alias connect_wifi='nmcli device wifi connect WirelessNet password `pass wifi/wifi`'
+alias connect_wifi='nmcli device wifi connect SSID password `pass wifi/wifi`'
 
 # Connect to hotspot
-alias connect_hotspot='nmcli device wifi connect Redmi9 password `pass wifi/hotspot`'
+alias connect_hotspot='nmcli device wifi connect SSID password `pass wifi/hotspot`'
 
 # Start games
 
