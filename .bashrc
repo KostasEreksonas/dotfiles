@@ -32,3 +32,5 @@ alias list_networks='nmcli device wifi list'
 alias sniperelite3='cd ~/Wine/SniperElite3/drive_c/Program\ Files\ \(x86\)/Sniper\ Elite\ 3/bin/ && WINEPREFIX=~/Wine/SniperElite3/ WINEARCH=win64 mangohud --dlsym wine SniperElite3.exe'
 # NBA 2K19
 alias nba2k19='cd ~/Wine/NBA2K19/drive_c/Program\ Files/NBA\ 2K19/ && WINEPREFIX=~/Wine/NBA2K19/ WINEARCH=win64 mangohud --dlsym wine NBA2K19.exe'
+alias Moorhuhn_Kart_2='cd ~/Wine/MoorhuhnKart2/drive_c/Phenomedia AG/Moorhuhn\ Kart\ 2\ XXL/ && WINEPREFIX=~/Wine/MoorhuhnKart2 WINEARCH=win32 wine MHK2-XXL.exe'
+alias Moorhuhn_2='cd ~/Wine/MoorhuhnKart2/drive_c/Program\ Files/Moorhuhn 2/ && WINEPREFIX=~/Wine/MoorhuhnKart2 WINEARCH=win32 wine Moorhuhn2.exe'
