@@ -33,4 +33,5 @@ alias sniperelite3='cd ~/Wine/SniperElite3/drive_c/Program\ Files\ \(x86\)/Snipe
 # NBA 2K19
 alias nba2k19='cd ~/Wine/NBA2K19/drive_c/Program\ Files/NBA\ 2K19/ && WINEPREFIX=~/Wine/NBA2K19/ WINEARCH=win64 mangohud --dlsym wine NBA2K19.exe'
 alias Moorhuhn_Kart_2='cd ~/Wine/MoorhuhnKart2/drive_c/Phenomedia AG/Moorhuhn\ Kart\ 2\ XXL/ && WINEPREFIX=~/Wine/MoorhuhnKart2 WINEARCH=win32 wine MHK2-XXL.exe'
-alias Moorhuhn_2='cd ~/Wine/MoorhuhnKart2/drive_c/Program\ Files/Moorhuhn 2/ && WINEPREFIX=~/Wine/MoorhuhnKart2 WINEARCH=win32 wine Moorhuhn2.exe'
+alias Moorhuhn_2='cd ~/Wine/MoorhuhnKart2/drive_c/Program\ Files/Moorhuhn\ 2/ && WINEPREFIX=~/Wine/MoorhuhnKart2 WINEARCH=win32 wine Moorhuhn2.exe'
+alias Sallys_Salon='cd ~/Wine/SallysSalon/drive_c/Program\ Files\ \(x86\)/Sallys\ Salon/ && WINEPREFIX=~/Wine/SallysSalon WINEARCH=win64 wine SallySalon.exe'
