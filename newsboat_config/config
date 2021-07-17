@@ -1,8 +1,8 @@
 # Basic configuration
 browser         "firefox"
-player          "vlc"
-download-path   "/home/kostas/Downloads/Articles/%n"
-save-path       "/home/kostas/Downloads/Articles"
+player          "mpv"
+download-path   "~/Downloads/Articles/%n"
+save-path       "~/Downloads/Articles"
 reload-threads  20
 cleanup-on-quit yes
 text-width      74
@@ -15,24 +15,24 @@ notify-program	notify-send
 always-display-description yes
 
 # Color configuration
-#color listnormal cyan default
-color listnormal color208 color234
-#color listfocus black yellow standout bold
-color listfocus_unread color15 color0 blink bold
-#color listnormal_unread blue default
-color listnormal_unread color244 color234
-#color listfocus_unread yellow default bold
-color listfocus color166 color0 bold
-#color info red black bold
-color info color38 color235 bold
-#color article cyan default
-color article color15 color0
+color listnormal cyan default
+#color listnormal color208 color234
+color listfocus black yellow standout bold
+#color listfocus_unread color15 color0 blink bold
+color listnormal_unread blue default
+#color listnormal_unread color244 color234
+color listfocus_unread yellow default bold
+#color listfocus color166 color0 bold
+color info red black bold
+#color info color38 color235 bold
+color article cyan default
+#color article color15 color0
 color background color15 color0
 
 # Macros
 browser firefox
 macro , open-in-browser
-macro v set browser "i3 exec vlc"; open-in-browser ; set browser firefox
+macro v set browser "dwm exec mpv"; open-in-browser ; set browser firefox
 macro w set browser "w3m"; open-in-browser ; set browser firefox
 
 # Feed list format
