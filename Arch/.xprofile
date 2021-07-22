@@ -10,7 +10,7 @@ feh --bg-fill /usr/share/pixmaps/background.jpg &
 udiskie &
 
 # Picom compositor for transparency effects
-picom -b --config /home/kostas/.config/picom/picom.conf
+picom -b --config ~/.config/picom/picom.conf
 
 # Loop for autostarting dwm after quitting with Mod + Shift + Q
 #while true; do
