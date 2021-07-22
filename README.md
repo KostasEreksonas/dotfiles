@@ -6,5 +6,5 @@ Table of Contents
 
 In this repository I will store dotfiles for my Arch and Gentoo Linux installations.
 
-[Arch Linux dotfiles](../master/Arch)
-[Gentoo Linux dotfiles](../master/Gentoo)
+* [Arch Linux dotfiles](../master/Arch)
+* [Gentoo Linux dotfiles](../master/Gentoo)
