@@ -8,6 +8,7 @@ Table of Contents
 Personal Arch Linux installation configuration files for easier backup after doing a re-install.
 
 # Programs
+
 In this section I will list the programs for which I have configs in this repository:
 
 * [Dunst](../master/dunst/) - notification daemon.
