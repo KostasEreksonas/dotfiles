@@ -20,7 +20,7 @@ set spoolfile="+INBOX"
 mailboxes = +INBOX +[Gmail]/Drafts +[Gmail]/Important +[Gmail]/Sent\ Mail +[Gmail]/Spam +[Gmail]/Starred +[Gmail]/Trash
 
 # ------------- Native SMTP for sending mail --------
-# set smtp_url="smtp://k.ereksonas@gmail.com@smtp.gmail.com:587/"
+# set smtp_url="smtp://name@gmail.com@smtp.gmail.com:587/"
 # set smtp_pass=$imap_pass
 
 # ------------- NAME --------------------------------

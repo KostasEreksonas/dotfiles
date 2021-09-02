@@ -2,13 +2,13 @@
 
 # ------------- Accounts ----------------------------
 source ~/.config/mutt/accounts/4
-folder-hook $folder 'source ~/.config/mutt/accounts/KU'
+folder-hook $folder 'source ~/.config/mutt/accounts/4'
 source ~/.config/mutt/accounts/3
-folder-hook $folder 'source ~/.config/mutt/accounts/cockmail'
+folder-hook $folder 'source ~/.config/mutt/accounts/3'
 source ~/.config/mutt/accounts/2
-folder-hook $folder 'source ~/.config/mutt/accounts/gmail_main'
+folder-hook $folder 'source ~/.config/mutt/accounts/2'
 source ~/.config/mutt/accounts/1
-folder-hook $folder 'source ~/.config/mutt/accounts/gmail'
+folder-hook $folder 'source ~/.config/mutt/accounts/1'
 
 # ------------- Passwords managing ------------------
 source ~/.config/mutt/gpg.rc		# Use gpg for encrypting e-mail passwords

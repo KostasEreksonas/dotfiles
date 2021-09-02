@@ -19,7 +19,7 @@ set spoolfile="+INBOX"
 mailboxes =INBOX =Sent =Trash
 
 # ------------- Native SMTP for sending mail --------
-# set smtp_url="smtp://jpkovera@cock.li@mail.cock.li:587/"
+# set smtp_url="smtp://name@cock.li@mail.cock.li:587/"
 # set smtp_pass=$imap_pass
 
 # ------------- NAME --------------------------------
