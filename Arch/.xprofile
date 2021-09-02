@@ -9,6 +9,9 @@ feh --bg-fill /usr/share/pixmaps/background.jpg &
 # Automatic mount of connected usb devices
 udiskie &
 
+# Add a status bar on top of the screen
+dwmblocks &
+
 # Picom compositor for transparency effects
 picom -b --config ~/.config/picom/picom.conf
 
