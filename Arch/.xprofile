@@ -18,6 +18,9 @@ numlockx &
 # Picom compositor for transparency effects
 picom -b --config ~/.config/picom/picom.conf
 
+# Fix for Pycharm blank window on program's startup
+export _JAVA_AWT_WM_NONREPARENTING=1
+
 # Loop for autostarting dwm after quitting with Mod + Shift + Q
 #while true; do
 	#dwm >/dev/null 2>&1
