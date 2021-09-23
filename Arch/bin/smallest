@@ -1,0 +1,22 @@
+#!/bin/sh
+read $VAR1
+num+=(${VAR1})
+read $VAR2
+num+=(${VAR2})
+read $VAR3
+num+=(${VAR3})
+
+if [ ${num[0]} -lt ${num[1]} ] && [ ${num[0]} -lt ${num[2]} ]
+then
+	echo ${num[0]}
+fi
+
+if [ ${num[1]} -lt ${num[0]} ] && [ ${num[1]} -lt ${num[2]} ]
+then
+	echo ${num[1]}
+fi
+
+if [ ${num[2]} -lt ${num[0]} ] && [ ${num[2]} -lt ${num[1]} ]
+then
+	echo ${num[2]}
+fi
