@@ -133,6 +133,7 @@ set shiftwidth=4
 set noexpandtab
 set backspace=indent,eol,start
 set number
+set linebreak
 
 " Filetype detection
 filetype plugin indent on
