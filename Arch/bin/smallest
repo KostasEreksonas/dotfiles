@@ -1,22 +1,22 @@
 #!/bin/sh
-read VAR1
-read VAR2
-read VAR3
+read -p "First number: " VAR1
+read -p "Second number: " VAR2
+read -p "Third number: " VAR3
 num1=$VAR1
 num2=$VAR2
 num3=$VAR3
 
 if [ ${num1} -lt ${num2} ] && [ ${num1} -lt ${num3} ]
 then
-	echo ${num1}
+	echo "Smallest number is:" ${num1}
 fi
 
 if [ ${num2} -lt ${num1} ] && [ ${num2} -lt ${num3} ]
 then
-	echo ${num2}
+	echo "Smallest number is:" ${num2}
 fi
 
 if [ ${num3} -lt ${num1} ] && [ ${num3} -lt ${num2} ]
 then
-	echo ${num3}
+	echo "Smallest number is:" ${num3}
 fi
