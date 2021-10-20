@@ -20,3 +20,4 @@ In this section I will list the programs for which I have configs in this reposi
 * [Picom](../Arch/picom/) - compositor for Xorg.
 * [Ranger](../Arch/ranger/) - file manager operating within the command line interface.
 * [Vim](../Arch/.vimrc) - text editor operating within the command line interface.
+* [Dwm](../Arch/dwm.desktop) - a desktop entry of dwm to fix "failed to start session" error on lightdm.
