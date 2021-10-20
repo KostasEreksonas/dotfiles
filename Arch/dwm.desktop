@@ -1,0 +1,6 @@
+[Desktop Entry]
+Name=dwm
+Comment=start dwm from lightdm
+Exec=/usr/local/bin/dwm
+TryExec=/usr/local/bin/dwm
+Type=Application
