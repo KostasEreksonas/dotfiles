@@ -22,6 +22,9 @@ execute pathogen#infect()
 " Syntax highligting
 syntax on
 
+" Set paste mode for pasting from clipboard
+set pastetoggle=<F2>
+
 " Set encoding
 set encoding=utf-8
 
