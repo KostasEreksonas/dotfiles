@@ -1,11 +1,12 @@
-Table of Contents
-=================
-* [Dotfiles](#Dotfiles)
-* [Programs](#Programs)
-
-# Dotfiles
+# Dotfiles for Arch
 
 Personal Arch Linux installation configuration files for easier backup after doing a re-install.
+
+Table of Contents
+=================
+* [Dotfiles for Arch](#Dotfiles-for-Arch)
+* [Programs](#Programs)
+
 
 # Programs
 
