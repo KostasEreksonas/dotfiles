@@ -31,7 +31,7 @@ set encoding=utf-8
 " Set line numbering
 set number relativenumber
 
-" Filetype detection, plugin and indent set on 
+" Filetype detection, plugin and indent set on
 filetype plugin indent on
 
 " Start NERDTree and leave the cursor in it.
