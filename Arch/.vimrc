@@ -55,7 +55,7 @@ set nofoldenable
 :augroup END
 
 "-- THEMING --
-set cursorline
+" set cursorline
 set background=dark
 set guifont=Hack\ Nerd\ Font\ Mono\ 20
 
