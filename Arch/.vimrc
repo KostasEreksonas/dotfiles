@@ -66,9 +66,11 @@ let g:airline_right_sep = "\uE0B6"
 " set the CN (column number) symbol:
 let g:airline_section_z = airline#section#create(["\uE0A1" . '%{line(".")}' . "\uE0A3" . '%{col(".")}'])
 
-let g:airline_theme='material'
+let g:airline_theme='solarized'
 let g:material_theme_style = 'darker'
-colorscheme material
+colorscheme solarized
+let g:solarized_termcolors=256
+
 hi Normal       ctermbg=NONE guibg=NONE
 hi SignColumn   ctermbg=235 guibg=#262626
 hi LineNr       ctermfg=grey guifg=grey ctermbg=NONE guibg=NONE
@@ -77,11 +79,11 @@ hi CursorLineNr ctermbg=NONE guibg=NONE ctermfg=178 guifg=#d7af00
 let g:gitgutter_set_sign_backgrounds = 0
 
 "-- Whitespace highlight --
-match ExtraWhitespace /\s\+$/
-autocmd BufWinEnter * match ExtraWhitespace /\s\+$/
-autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
-autocmd InsertLeave * match ExtraWhitespace /\s\+$/
-autocmd BufWinLeave * call clearmatches()
+"match ExtraWhitespace /\s\+$/
+"autocmd BufWinEnter * match ExtraWhitespace /\s\+$/
+"autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
+"autocmd InsertLeave * match ExtraWhitespace /\s\+$/
+"autocmd BufWinLeave * call clearmatches()
 
 "-- ALE --
 hi clear ALEErrorSign
