@@ -12,6 +12,7 @@ export PS1="\[$(tput bold)\]\[$(tput setaf 1)\][\[$(tput setaf 3)\]\u\[$(tput se
 
 export PATH=$PATH:/home/username/bin
 export TERMINAL=st
+export EDITOR=nvim
 
 RANGER_LOAD_DEFAULT_RC=FALSE
 
