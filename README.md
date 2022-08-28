@@ -1,10 +1,26 @@
-# Dotfiles
+# Dotfiles for Arch
 
-In this repository I will store dotfiles for my Arch and Gentoo Linux installations.
+Personal Arch Linux installation configuration files for easier backup after doing a re-install.
 
 Table of Contents
 =================
-* [Dotfiles](#Dotfiles)
+* [Dotfiles for Arch](#Dotfiles-for-Arch)
+* [Programs](#Programs)
 
-Dotfiles for Arch linux installation can be found here: [Arch Linux dotfiles](../master/Arch)
-Dotfiles for Gentoo linux installation can be found here: [Gentoo Linux dotfiles](../master/Gentoo)
+
+# Programs
+
+In this section I will list the programs for which I have configs in this repository:
+
+* [Dunst](../dunst/) - notification daemon.
+* [Gsimplecal](../gsimplecal/) - calendar applet.
+* [i3wm](../i3/) - tiling window manager.
+* [i3blocks](../i3blocks/) - status line for i3wm.
+* [Neomutt](../mutt/) - e-mail client operating within the command line interface.
+* [Newsboat](../newsboat_config/) - RSS/Atom feed reader.
+* [Picom](../picom/) - compositor for Xorg.
+* [Ranger](../ranger/) - file manager operating within the command line interface.
+* [Vim](.../vimrc) - text editor operating within the command line interface.
+* [Nvim](../init.vim) - updated text editor operating within the command line interface.
+* [Dwm](../dwm.desktop) - a desktop entry of dwm to fix "failed to start session" error on lightdm.
+* [Scripts](../.local/bin/) - scripts for my custom dwm build.
