@@ -67,7 +67,7 @@ let g:airline_right_sep = "\uE0B6"
 let g:airline_section_z = airline#section#create(["\uE0A1" . '%{line(".")}' . "\uE0A3" . '%{col(".")}'])
 
 let g:airline_theme='solarized_flood'
-colorscheme gruvbox8_soft
+colorscheme solarized8
 
 hi Normal       ctermbg=NONE guibg=NONE
 hi SignColumn   ctermbg=235 guibg=#262626
@@ -157,5 +157,6 @@ autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
 autocmd InsertLeave * match ExtraWhitespace /\s\+$/
 autocmd BufWinLeave * call clearmatches()
 
+" Change buffer focus in vim
 nmap , :bp<CR>
 nmap . :bn<CR>
