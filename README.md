@@ -1,10 +1,9 @@
-# Dotfiles for Arch
+# Dotfiles
 
-Personal Arch Linux installation configuration files for easier backup after doing a re-install.
+Custom configs for a tiling WM based Linux install.
 
 Table of Contents
 =================
-* [Dotfiles for Arch](#Dotfiles-for-Arch)
 * [Programs](#Programs)
 
 
