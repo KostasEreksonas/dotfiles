@@ -1,4 +1,5 @@
 #!/bin/sh
+
 read -p "First number: " VAR1
 read -p "Second number: " VAR2
 read -p "Third number: " VAR3
