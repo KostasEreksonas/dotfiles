@@ -1,11 +1,8 @@
 #!/bin/sh
 
-read -p "First number: " VAR1
-read -p "Second number: " VAR2
-read -p "Third number: " VAR3
-num1=$VAR1
-num2=$VAR2
-num3=$VAR3
+read -p "First number: " num1
+read -p "Second number: " num2
+read -p "Third number: " num3
 
 if [ ${num1} -lt ${num2} ] && [ ${num1} -lt ${num3} ]
 then
