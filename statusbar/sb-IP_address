@@ -1,0 +1,21 @@
+#!/bin/sh
+
+# Define icon
+icon=
+
+# Get UP network interface
+interface="$(ip addr | grep "state UP" | awk '{print $2}' | cut -d ":" -f 1)"
+
+# Get IP address
+IP="$(ip a | grep $interface | awk 'NR == 2 {print $2}' | cut -d "/" -f 1)"
+
+# Define mouse controls
+case $BUTTON in
+	# Left-click opens a terminal instance showing network interface info
+	1) setsid -f "$TERMINAL" -e watch ip a ;;
+	# Right-click creates notification showing current IP address
+	3) notify-send "IP Address" "$icon $IP" ;;
+esac
+
+# Display icon and IP address
+echo "$icon $IP"
