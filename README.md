@@ -9,7 +9,7 @@ Table of Contents
 
 # Programs
 
-In this section I will list the programs for which I have configs in this repository:
+Following is a list of software that I have configured for my window manager:
 
 * [Dunst](tree/master/dunst/) - notification daemon.
 * [Gsimplecal](tree/master/gsimplecal/) - calendar applet.
