@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 DIR1=$PWD/A
 DIR2=$PWD/B

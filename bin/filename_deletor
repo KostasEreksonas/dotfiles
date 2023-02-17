@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 NAME=text_to_delete
 for filename in ./*; do mv "./$filename" "./$(echo "$filename" | sed -e 's/$NAME//g')"; done

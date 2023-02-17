@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 # sysinfo_page - A script to produce a html file
 

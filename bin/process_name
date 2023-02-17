@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 function search {
 	echo "What process you want to check?"
 	read name
