@@ -1,7 +1,8 @@
 #!/bin/sh
 
 function place_screens() {
-	echo $sideof
+	dialog --title "Screen Configuration" --yes-label "Right-of" --no-label "Left-of" --yesno "Where do you want to put your secondary screen?" 0 0 3>&1 1>&2 2>&3
+	return $?
 }
 
 # Detect connected displays
@@ -30,9 +31,6 @@ done
 # Define dialog exit codes
 : {OK=0}
 : {CANCEL=1}
-: {HELP=2}
-: {EXTRA=3}
-: {ITEM_HELP=4}
 : {ESC=255}
 
 # Create a dialog menu for configuring displays
@@ -53,12 +51,12 @@ while true; do
 			exit 1
 			;;
 	esac
+	sideof=''
 	case $selection in
 		1)
 			primary=${displays[0]}
 			secondary=${displays[1]}
-			sideof=''
-			dialog --title "Screen configuration" --no-collapse --yes-label "right-of" --no-label "left-of" --yesno "Where do you want to put your secondary screen?" 0 0
+			$(place_screens)
 			if [ $? == 0 ]; then
 				sideof="--right-of"
 			else
@@ -68,8 +66,7 @@ while true; do
 		2)
 			primary=${displays[1]}
 			secondary=${displays[0]}
-			sideof=''
-			dialog --title "Screen configuration" --no-collapse --yes-label "right-of" --no-label "left-of" --yesno "Where do you want to put your secondary screen?" 0 0
+			$(place_screens)
 			if [ $? == 0 ]; then
 				sideof="--right-of"
 			else
