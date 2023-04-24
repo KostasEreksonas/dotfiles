@@ -4,10 +4,10 @@ Custom configs for a tiling WM based Linux install.
 
 Table of Contents
 =================
-* [Programs](#Programs)
+* [Software](#Software)
 
 
-# Programs
+# Software
 
 Following is a list of software that I have configured for my window manager:
 
