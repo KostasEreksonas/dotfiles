@@ -4,17 +4,17 @@ read -p "First number: " num1
 read -p "Second number: " num2
 read -p "Third number: " num3
 
-if [ ${num1} -lt ${num2} ] && [ ${num1} -lt ${num3} ]
+if [ $num1 -lt $num2 ] && [ $num1 -lt $num3 ]
 then
-	echo "Smallest number is:" ${num1}
+	printf "First number is the smallest: $num1\n"
 fi
 
-if [ ${num2} -lt ${num1} ] && [ ${num2} -lt ${num3} ]
+if [ $num2 -lt $num1 ] && [ $num2 -lt $num3 ]
 then
-	echo "Smallest number is:" ${num2}
+	printf "Second number is the smallest: $num2\n"
 fi
 
-if [ ${num3} -lt ${num1} ] && [ ${num3} -lt ${num2} ]
+if [ $num3 -lt $num1 ] && [ $num3 -lt $num2 ]
 then
-	echo "Smallest number is:" ${num3}
+	printf "Third number is the smallest: $num3\n"
 fi
