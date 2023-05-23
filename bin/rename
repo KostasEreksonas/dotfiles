@@ -1,0 +1,9 @@
+#!/bin/sh
+
+files=(*)
+for ((i=0; i<${#files[@]}; i++)); do
+	title=$(exiftool ${files[$i]} | grep Title | head -1 | cut -d " " -f 29)
+	extension=$(echo ${files[$i]} | cut -d "." -f 2)
+	mv ${files[$i]} $title.$extension
+	printf "Moving ${files[$i]} to $title.$extension\n"
+done
