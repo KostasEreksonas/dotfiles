@@ -4,7 +4,7 @@
 setxkbmap -model pc105 -layout us,lt -option grp:alt_shift_toggle &
 
 # Extend displays on WM startup
-xrandr --output eDP1 --auto --output DP1 --right-of eDP1 --auto
+xrandr --output eDP1 --auto --output HDMI-0 --right-of eDP1 --auto
 
 # Desktop background image
 feh --bg-fill /usr/share/pixmaps/background.jpg &
