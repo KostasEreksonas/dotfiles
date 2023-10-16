@@ -6,7 +6,6 @@ Table of Contents
 =================
 * [Software](#Software)
 
-
 # Software
 
 Following is a list of software that I have configured for my window manager:
