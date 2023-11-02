@@ -18,6 +18,7 @@ Following is a list of software that I have configured for my window manager:
 * [Newsboat](tree/master/newsboat_config/) - RSS/Atom feed reader.
 * [Picom](tree/master/picom/) - compositor for Xorg.
 * [Ranger](tree/master/ranger/) - file manager operating within the command line interface.
+* [Lf](tree/master/lf/) - file manager operating within the command line interface.
 * [Vim](tree/master/.vimrc) - text editor operating within the command line interface.
 * [Nvim](tree/master/init.vim) - updated text editor operating within the command line interface.
 * [Dwm](tree/master/dwm.desktop) - a desktop entry of dwm to fix "failed to start session" error on lightdm.
