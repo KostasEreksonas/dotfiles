@@ -35,9 +35,17 @@ export -p SSLKEYLOGFILE=~/ssl-key.log # Log ssl keys
 
 source ~/pureline/pureline ~/.pureline.conf
 
+#  -------
+# | Games |
+#  -------
+
+alias buildALot="cd ~/Wine/BuildALot/drive_c/Program\ Files\ \(x86\)/Foxy\ Games/Build\ a\ Lot\ 4\ -\ Power\ Source/ && WINEPREFIX=~/Wine/BuildALot/ WINEARCH=win64 wine Buildalot4.exe"
+
 #  ------
 # | Misc |
 #  ------
+
+RANGER_LOAD_DEFAULT_RC=FALSE
 
 # Autostart X on login
 if [[ -z $DISPLAY && $XDG_VTNR -eq 1 ]]; then
