@@ -1,6 +1,6 @@
 # Dotfiles
 
-Custom configs and scripts for a tiling WM based Linux installation.
+Custom configs and scripts for a tiling WM (dwm) based Linux installation.
 
 Table of Contents
 =================
