@@ -1,0 +1,5 @@
+phpstorm
+vim-youcompleteme-git
+xurls
+yay
+zoom
