@@ -1,14 +1,10 @@
 # vim: filetype=muttrc
 
 # ------------- Accounts ----------------------------
-source ~/.config/mutt/accounts/4
-folder-hook $folder 'source ~/.config/mutt/accounts/4'
-source ~/.config/mutt/accounts/3
-folder-hook $folder 'source ~/.config/mutt/accounts/3'
-source ~/.config/mutt/accounts/2
-folder-hook $folder 'source ~/.config/mutt/accounts/2'
-source ~/.config/mutt/accounts/1
-folder-hook $folder 'source ~/.config/mutt/accounts/1'
+source ~/.config/mutt/accounts/email
+folder-hook $folder 'source ~/.config/mutt/accounts/email'
+source ~/.config/mutt/accounts/email_main
+folder-hook $folder 'source ~/.config/mutt/accounts/email_main'
 
 # ------------- Passwords managing ------------------
 source ~/.config/mutt/gpg.rc		# Use gpg for encrypting e-mail passwords
