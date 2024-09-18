@@ -1,12 +1,8 @@
 phpstorm
 python310
-python310-debug
 unixbench
-unixbench-debug
 ventoy
 vim-youcompleteme-git
-vim-youcompleteme-git-debug
 xurls
 yay
-yay-debug
 zoom
