@@ -8,7 +8,7 @@ Table of Contents
 
 # Software
 
-Following is a list of software that I have configured for my window manager:
+Following is a list of software that I have configured for dwm:
 
 * [Dunst](tree/master/dunst/) - notification daemon.
 * [Gsimplecal](tree/master/gsimplecal/) - calendar applet.
