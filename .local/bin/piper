@@ -1,4 +1,4 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 # Simple script to redirect url's opened from termite.
 
 # A function containing a case list of options

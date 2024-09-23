@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # Get CPU usage
 usage="$(mpstat | awk 'NR==4 {print 100-$13}')"

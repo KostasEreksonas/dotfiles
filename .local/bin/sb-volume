@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # Grab volume percentage value from amixer
 vol="$(pamixer --get-volume)"

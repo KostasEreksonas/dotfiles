@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # Original script taken from Luke Smith's voidrice repo @ https://github.com/LukeSmithxyz/voidrice/blob/master/.local/bin/statusbar/sb-nettraf
 

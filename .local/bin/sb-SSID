@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # Get network name
 SSID="$(iw dev | awk '/ssid/ {print $2}')"

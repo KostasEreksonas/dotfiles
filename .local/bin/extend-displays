@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 function place_screens() {
 	dialog --title "Screen Configuration" --yes-label "Right-of" --no-label "Left-of" --yesno "Where do you want to put your secondary screen?" 0 0 3>&1 1>&2 2>&3

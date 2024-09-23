@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # Read current time
 time="$(date '+%Y %b %d (%a) %I:%M%p')"

@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # Read battery charge level
 #charge="$(acpi | awk '{print $4}' | tr -d "%" | tr -d ",")"

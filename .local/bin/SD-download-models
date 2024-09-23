@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # Download additional models for Stable Diffusion
 

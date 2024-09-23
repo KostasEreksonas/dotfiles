@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # Install extensions for stable diffusion webui
 # Declare a read-only associative array of stable diffusion extensions

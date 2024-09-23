@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # Set temperature icon
 icon=糖

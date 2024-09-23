@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 function getModel() {
 	count=$(grep model\ name /proc/cpuinfo | head -1 | wc -w);
