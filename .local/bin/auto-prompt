@@ -1,0 +1,175 @@
+#!/bin/bash
+
+delimiter="----------------------------------------------------------------"
+
+formatTime() {
+    # Format time to <xx>h <xx>m <xx.xxx>s
+    time="${1}"
+
+	# Get seconds value
+    seconds="${time%%.*}"
+    if [[ -z "${seconds}" ]]; then seconds=0; fi
+    miliseconds="${time##*.}"
+    if [[ -z "${miliseconds}" ]]; then miliseconds=0; fi
+	if [[ "${seconds}" -lt 60 ]]; then
+        printf "%s.%s seconds\n" "${seconds}" "${miliseconds}"
+    elif [[ "${seconds}" -ge 60 && "${seconds}" -lt 3600 ]]; then
+        minutes="$(echo "${seconds}/60" | bc -l | cut -d "." -f 1)"
+        if [[ -z "${minutes}" ]]; then minutes=0; fi
+		seconds="$((${seconds}-60*${minutes}))"
+        if [[ -z "${seconds}" ]]; then seconds=0; fi
+		if [[ "${minutes}" == 1 ]]; then
+			printf "%s minute %s.%s seconds\n" "${minutes}" "${seconds}" "${miliseconds}"
+		else
+			printf "%s minutes %s.%s seconds\n" "${minutes}" "${seconds}" "${miliseconds}"
+		fi
+	elif [[ "${seconds}" -ge 3600 ]]; then
+        hours="$(echo "${seconds}/3600" | bc -l | cut -d "." -f 1)"
+        if [[ -z "${hours}" ]]; then hours=0; fi
+        seconds="$((${seconds}-3600*${hours}))"
+        minutes="$(echo "${seconds}/60" | bc -l | cut -d "." -f 1)"
+        if [[ -z "${minutes}" ]]; then minutes=0; fi
+        seconds="$((${seconds}-60*${minutes}))"
+        if [[ -z "${seconds}" ]]; then seconds=0; fi
+		if [[ "${hours}" == 1 ]] && [[ "${minutes}" == 1 ]]; then
+			printf "%s hour %s minute %s.%s seconds\n" "${hours}" "${minutes}" "${seconds}" "${miliseconds}"
+		elif [[ "${hours}" == 1 ]] && [[ "${minutes}" -gt 1 ]]; then
+			printf "%s hour %s minutes %s.%s seconds\n" "${hours}" "${minutes}" "${seconds}" "${miliseconds}"
+		elif [[ "${hours}" -gt 1 ]] && [[ "${minutes}" == 1 ]]; then
+			printf "%s hours %s minute %s.%s seconds\n" "${hours}" "${minutes}" "${seconds}" "${miliseconds}"
+		else
+			printf "%s hours %s minutes %s.%s seconds\n" "${hours}" "${minutes}" "${seconds}" "${miliseconds}"
+		fi
+	fi
+}
+
+select_model() {
+	# Select ollama model
+	PS3="| [+] Select model: "
+	models=("llama3.1" "llama3.2" "mistral")
+	select model in "${models[@]}"; do
+		case "${model}" in
+			"llama3.1")
+				printf "${model}"
+				break
+				;;
+			"llama3.2")
+				printf "${model}"
+				break
+				;;
+			"mistral")
+				printf "${model}"
+				break
+				;;
+		esac
+	done
+}
+
+# Check if ollama is installed
+if ! which ollama 1>/dev/null; then
+	printf "%s\n" "${delimiter}"
+	printf "| [+] Installing ollama\n"
+	printf "%s\n" "${delimiter}"
+else
+	printf "%s\n" "${delimiter}"
+	printf "| [+] Ollama installed\n"
+	printf "%s\n" "${delimiter}"
+fi
+
+# Create directory for ollama prompts
+prompt_dir="${HOME}/Documents/ollama"
+if ! [[ -d "${prompt_dir}" ]]; then
+	mkdir -p "${prompt_dir}"
+	printf "%s\n" "${delimiter}"
+	printf "| [+] Directory %s created\n" "${prompt_dir}"
+	printf "%s\n" "${delimiter}"
+else
+	printf "%s\n" "${delimiter}"
+	printf "| [+] Directory %s exists\n" "${prompt_dir}"
+	printf "%s\n" "${delimiter}"
+fi
+
+# List installed models
+readarray -d '' models < <(find "${HOME}/.ollama/models/manifests/registry.ollama.ai/library" -mindepth 1 -maxdepth 1 -type d -print0)
+
+# Leave only basename of found models (remove full path)
+tmp=()
+for model in "${models[@]}"; do
+	tmp+=("${model##*/}")
+done
+
+# Replace original array with basenames
+unset models
+models=("${tmp[@]}")
+unset tmp
+
+# Select ollama model
+printf "%s\n" "${delimiter}"
+printf "| [+] Select model\n"
+printf "%s\n" "${delimiter}"
+
+model="$(select_model)"
+
+# Pull a model if it does not exist locally
+if [[ "${models[@]}" =~ "${model}" ]]; then
+	printf "%s\n" "${delimiter}"
+	printf "| [+] Selected model: %s\n" "${model}"
+	printf "%s\n" "${delimiter}"
+else
+	printf "%s\n" "${delimiter}"
+	printf "| [+] Pulling model: %s\n" "${model}"
+	printf "%s\n" "${delimiter}"
+	ollama pull "${model}"
+fi
+
+# Set prompt file name
+prompt_file="${prompt_dir}/Prompt-$(date +%Y-%m-%d_%H-%M-%S).txt"
+
+# Set logfile
+logfile="/tmp/ollama_log"
+
+# Start ollama service in the background
+nohup ollama serve 2>>"${logfile}" 1>&2 &
+
+# Get pid for ollama server
+ollama_pid="${!}"
+
+# Create prompt
+printf "%s\n" "${delimiter}"
+read -p "| [+] Create prompt: " prompt
+printf "%s\n" "${delimiter}"
+
+# Write prompt to a file
+printf "Prompt:\n%s\nResult:\n" "${prompt}" >>"${prompt_file}"
+
+# Generating answer
+printf "%s\n" "${delimiter}"
+printf "| [+] Generating answer\n"
+printf "%s\n" "${delimiter}"
+
+# Start time
+start=$(date +%s.%3N)
+
+# Run model
+ollama run "${model}" "${prompt}" 1>>"${prompt_file}"
+
+test="${!}"
+
+# Get prompt generation pid
+prompt_pid="$(ps -A -o pid,cmd | grep ollama | grep -v grep | head -n 1 | awk '{print $1}')"
+
+# End time
+end=$(date +%s.%3N)
+
+# Generating answer
+printf "%s\n" "${delimiter}"
+printf "| [+] Answer generated in %s \n" "$(formatTime $(echo "${end} - ${start}" | bc -l))"
+printf "%s\n" "${delimiter}"
+
+
+# Kill processes
+kill -9 "${ollama_pid}" 2>/dev/null
+llama_name=$(find /tmp/ -maxdepth 1 -type d -name ollama* -exec basename {} \;)
+pid=$(ps -ef | grep "${llama_name}" | head -n 1 | awk '{print $2}')
+kill -9 "${pid}" 2>/dev/null
+rm -r "/tmp/${llama_name}"
