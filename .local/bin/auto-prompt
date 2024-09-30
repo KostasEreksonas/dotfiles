@@ -103,6 +103,18 @@ unset models
 models=("${tmp[@]}")
 unset tmp
 
+# Set prompt file name
+prompt_file="${prompt_dir}/Prompt-$(date +%Y-%m-%d_%H-%M-%S).txt"
+
+# Set logfile
+logfile="/tmp/ollama_log"
+
+# Start ollama service in the background
+nohup ollama serve 2>>"${logfile}" 1>&2 &
+
+# Get pid for ollama server
+ollama_pid="${!}"
+
 # Select ollama model
 printf "%s\n" "${delimiter}"
 printf "| [+] Select model\n"
@@ -122,25 +134,13 @@ else
 	ollama pull "${model}"
 fi
 
-# Set prompt file name
-prompt_file="${prompt_dir}/Prompt-$(date +%Y-%m-%d_%H-%M-%S).txt"
-
-# Set logfile
-logfile="/tmp/ollama_log"
-
-# Start ollama service in the background
-nohup ollama serve 2>>"${logfile}" 1>&2 &
-
-# Get pid for ollama server
-ollama_pid="${!}"
-
 # Create prompt
 printf "%s\n" "${delimiter}"
 read -p "| [+] Create prompt: " prompt
 printf "%s\n" "${delimiter}"
 
 # Write prompt to a file
-printf "Prompt:\n%s\nResult:\n" "${prompt}" >>"${prompt_file}"
+printf "Model:%s\nPrompt:\n%s\nResult:\n" "${model}" "${prompt}" >>"${prompt_file}"
 
 # Generating answer
 printf "%s\n" "${delimiter}"
