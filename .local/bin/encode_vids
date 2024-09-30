@@ -1,0 +1,21 @@
+#!/bin/bash
+
+get_duration() {
+	local f="${1}"
+
+	exec 3<>/tmp/datafile
+
+	ffprobe -i "${f}" 2>&3
+
+	awk '{$1=$1;print}' < <(grep Duration /tmp/datafile | cut -d "," -f 1)
+
+	exec 3>&-
+
+	rm /tmp/datafile
+}
+
+for f in *.mp4; do
+	printf "${f} => ${f%%.*}.mkv\n"
+	get_duration "${f}"
+	ffmpeg -stats -loglevel error -i "${f}" -c:a copy -c:v libx265 -x265-params log-level=none -preset medium -crf 18 "${f%%.*}.mkv"
+done
