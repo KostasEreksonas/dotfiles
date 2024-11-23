@@ -1,0 +1,45 @@
+#!/bin/bash
+
+# Select wireless networks for wpa_supplicant
+
+chooseNetwork() {
+	while true; do
+		PS3="Choose network: "
+		select network in "${networks[@]##*/}"; do
+			case "${network}" in
+				"${network}")
+					printf "%s\n" "${network}"
+					break
+					;;
+			esac
+		done
+		if ! [[ -z "${network}" ]]; then break; fi
+	done
+}
+
+main() {
+	path="/etc/wpa_supplicant" && cd "${path}"
+
+	if ! [[ -d "${path}/saved" ]]; then
+		mkdir "${path}/saved"
+	fi
+
+	readarray -d '' networks < <(find "${path}/saved/" -type f -print0) && networks+=("New Network")
+
+	net="$(chooseNetwork)"
+
+	if [[ "${net}" == "New Network" ]]; then
+		read -p "Enter SSID for your network: " ssid
+		read -p "Enter password for your network: " password
+
+		wpa_passphrase "${ssid}" "${password}" > "wpa_supplicant.conf" && cp "wpa_supplicant.conf" "saved/${ssid}"
+	else
+		cp "saved/${net}" "wpa_supplicant.conf"
+	fi
+}
+
+if [[ "${EUID}" -eq 0 ]]; then
+	main
+else
+	printf "Must be superuser to run this script.\n"
+fi
