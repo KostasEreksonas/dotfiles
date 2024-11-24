@@ -3,6 +3,7 @@
 # Select wireless networks for wpa_supplicant
 
 chooseNetwork() {
+	# Choose one of the saved networks
 	while true; do
 		PS3="Choose network: "
 		select network in "${networks[@]##*/}"; do
@@ -13,6 +14,8 @@ chooseNetwork() {
 					;;
 			esac
 		done
+
+		# Break while loop only when a valid option is selected
 		if ! [[ -z "${network}" ]]; then break; fi
 	done
 }
@@ -20,14 +23,14 @@ chooseNetwork() {
 main() {
 	path="/etc/wpa_supplicant" && cd "${path}"
 
-	if ! [[ -d "${path}/saved" ]]; then
-		mkdir "${path}/saved"
-	fi
+	if ! [[ -d "${path}/saved" ]]; then mkdir "${path}/saved"; fi
 
+	# Read saved networks into an array
 	readarray -d '' networks < <(find "${path}/saved/" -type f -print0) && networks+=("New Network")
 
 	net="$(chooseNetwork)"
 
+	# Create a new config file and add it to saved networks
 	if [[ "${net}" == "New Network" ]]; then
 		read -p "Enter SSID for your network: " ssid
 		read -p "Enter password for your network: " password
@@ -38,6 +41,7 @@ main() {
 	fi
 }
 
+# Check for root privilleges
 if [[ "${EUID}" -eq 0 ]]; then
 	main
 else
