@@ -31,14 +31,31 @@ function separateDeps {
 	fi
 }
 
+function checkPackage() {
+	# Check if package is installed
+	pkg_name="${1}"
+	if ! which "${pkg_name}" 2>/dev/null 1>&2; then
+		printf "No package named %s\n" "${pkg_name}" && exit 1
+	fi
+}
+
+function usage() {
+	# Exit the script if no package name is provided
+	pkg_name="${1}"
+	if [ -z ${pkg_name} ]; then
+		printf "Usage: get-deps <package-name>\n" && exit 1
+	fi
+}
+
 # Change Internal Field Separator (IFS) to a newline
 IFS_bak=${IFS}
 IFS=$'\n'
 
+# Check if package exists
+checkPackage "${1}"
+
 # Exit the script if no package name is provided
-if [ -z ${1} ]; then
-	printf "Usage: get-deps <package-name>\n" && exit 1
-fi
+usage "${1}"
 
 # Put pacman -Qi output to an array
 # f - flag for optional dependencies
