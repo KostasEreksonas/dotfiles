@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Delimiter
+delimiter="----------------------------------------------------------------"
+
 # Get interface names
 names="$(ip a | grep "^[0-9]" | cut -d ":" -f 2 | tr -d " " | sed 's/$'\n'/ /g')"
 
@@ -8,16 +11,18 @@ IFS=$'\n'
 names=($names)
 IFS="${IFS_BAK}"
 
+printf "%s\n" "${delimiter}"
 for interface in "${names[@]}"; do
 	ips="$(ip a | grep "${interface}" | grep inet | cut -d " " -f 6)"
 	IFS=$'\n'
 	ips=($ips)
 	IFS="${IFS_BAK}"
 	if [[ ${#ips[@]} -eq 0 ]]; then
-		printf "${interface} has no ip address\n"
+		printf "| [+] ${interface}:\t no ip address\n"
 	else
 		for ip in "${ips[@]}"; do
-			printf "${interface}: ${ip}\n"
+			printf "| [+] ${interface}:\t ${ip}\n"
 		done
 	fi
 done
+printf "%s\n" "${delimiter}"
