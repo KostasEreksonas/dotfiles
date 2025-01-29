@@ -4,15 +4,15 @@
 delimiter="----------------------------------------------------------------"
 
 # Get interface names
-names="$(ip a | grep "^[0-9]" | cut -d ":" -f 2 | tr -d " " | sed 's/$'\n'/ /g')"
+interfaces="$(ip a | grep "^[0-9]" | cut -d ":" -f 2 | tr -d " " | sed 's/$'\n'/ /g')"
 
 IFS_BAK="${IFS}"
 IFS=$'\n'
-names=($names)
+interfaces=($interfaces)
 IFS="${IFS_BAK}"
 
 printf "%s\n" "${delimiter}"
-for interface in "${names[@]}"; do
+for interface in "${interfaces[@]}"; do
 	ips="$(ip a | grep "${interface}" | grep inet | cut -d " " -f 6)"
 	IFS=$'\n'
 	ips=($ips)
