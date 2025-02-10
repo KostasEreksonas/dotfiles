@@ -5,6 +5,9 @@ read -p "Choose port: " port
 interface="$(ip a | awk '/state UP/ {print $2}' | tr -d ":")"
 ip="$(ip a | grep "${interface}" | grep inet | cut -d " " -f 6 | cut -d "/" -f 1)"
 
-printf "Interface: %s\nAddress: %s:%s\n" "${interface}" "${ip}" "${port}"
+printf "| [+] Interface: %s\n| [+] Address: %s:%s\n" "${interface}" "${ip}" "${port}"
+
+printf "| [+] List files in current  directory:\n"
+ls -l
 
 python3 -m http.server "${port}"
