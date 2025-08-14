@@ -14,7 +14,7 @@ get_duration() {
 	rm /tmp/datafile
 }
 
-declare -a extensions=("mp4" "mkv" "mov" "wmv")
+declare -a extensions=("mp4" "mkv" "mov" "m4a" "wmv")
 
 for ext in "${extensions[@]}"; do
 	for file in *.${ext}; do
