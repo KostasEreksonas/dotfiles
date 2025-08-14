@@ -14,8 +14,12 @@ get_duration() {
 	rm /tmp/datafile
 }
 
-for f in *.mp4; do
-	printf "${f} => ${f%%.*}.mkv\n"
-	get_duration "${f}"
-	ffmpeg -stats -loglevel error -i "${f}" -c:a copy -c:v libx265 -x265-params log-level=none -preset medium -crf 18 "${f%%.*}.mkv"
+declare -a extensions=("mp4" "mkv" "mov" "wmv")
+
+for ext in "${extensions[@]}"; do
+	for file in *.${ext}; do
+		printf "${file} => ${file%%.*}_conv.mkv\n"
+		get_duration "${file}"
+		ffmpeg -stats -loglevel error -i "${file}" -acodec libmp3lame -ab 320k -c:v libx265 -x265-params log-level=none -preset medium -crf 18 "${file%%.*}_conv.mkv"
+	done
 done
