@@ -1,6 +1,8 @@
 #!/bin/bash
 
 get_duration() {
+	# Get duration of a video file
+
 	local f="${1}"
 
 	exec 3<>/tmp/datafile
@@ -13,6 +15,17 @@ get_duration() {
 
 	rm /tmp/datafile
 }
+
+lowercase_extension() {
+	# Get file extension in lowercase
+
+	local f="${1}"
+	a=$(echo "${f}" | sed -r "s/([^.]*)\$/\L\1/"); [ "${a}" != "${f}" ] && mv "${f}" "${a}"
+}
+
+#  ------
+# | Main |
+#  ------
 
 declare -a extensions=("mp4" "mkv" "mov" "m4a" "wmv")
 
