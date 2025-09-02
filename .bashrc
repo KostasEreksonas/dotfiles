@@ -27,7 +27,7 @@ alias listNetworks="nmcli device wifi list"
 export PATH=$PATH:/home/kostas/.local/bin # Add custom binary path
 export TERMINAL=st # Export $TERMINAL variable
 export EDITOR=nvim
-export -p SSLKEYLOGFILE=~/ssl-key.log # Log ssl keys
+#export -p SSLKEYLOGFILE=~/ssl-key.log # Log ssl keys
 
 #  ---------
 # | Sources |
