@@ -39,7 +39,9 @@ source ~/pureline/pureline ~/.pureline.conf
 # | Games |
 #  -------
 
-alias buildALot="cd ~/Wine/BuildALot/drive_c/Program\ Files\ \(x86\)/Foxy\ Games/Build\ a\ Lot\ 4\ -\ Power\ Source/ && WINEPREFIX=~/Wine/BuildALot/ WINEARCH=win64 wine Buildalot4.exe"
+alias pcsx2-qt="ENABLE_VKBASALT=1 pcsx2-qt" # Enable shaders via vkBasalt for pcsx2
+
+
 
 #  ------
 # | Misc |
