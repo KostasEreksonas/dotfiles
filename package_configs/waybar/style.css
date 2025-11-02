@@ -1,0 +1,18 @@
+#tags button {
+	color: #343A40;
+	padding: 0 3px;
+	
+}
+
+#tags button.occupied {
+	color: #bbbbbb;
+	
+}
+
+#tags button.focused {
+	color: #9EE9EA;
+}
+
+#tags button.urgent {
+	color: #E49186;
+}
