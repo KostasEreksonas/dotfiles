@@ -1,24 +1,45 @@
-#!/bin/bash
+#!/bin/sh
+backlight="/sys/class/backlight/intel_backlight"
+step=200   # tune per your max_brightness
 
-# Get brightness value
-brightness="$(xbacklight -get | awk -F. '{print $1}')"
+current=$(cat "${backlight}/brightness")
+max=$(cat "${backlight}/max_brightness")
+percentage=$(echo "(${current} / ${max} * 100)" | bc -l)
+percentage=$(printf "%.0f" ${percentage})
 
 # Define mouse controls
 case $BUTTON in
         # Right-click shows a notification with brightness level
-        3) notify-send "Brightness" " $brightness%" ;;
+	3) notify-send "Brightness" " ${percentage}%" ;;
 esac
 
 # Display brightness icon depending on brightness level
-if [ "$brightness" -gt "75" ]; then
+if [ "${percentage}" -gt "75" ]; then
         icon=""
-elif [ "$brightness" -gt "35" ]; then
+elif [ "${percentage}" -gt "35" ]; then
         icon=""
-elif [ "$brightness" -gt "0" ]; then
+elif [ "${percentage}" -gt "0" ]; then
         icon=""
 else
-        echo " $brightness%" && exit
+        echo " ${percentage}%"
 fi
 
-# Output icon and brightness
-echo "$icon $brightness%"
+case "$1" in
+	up)
+		new=$((current + step))
+		[ "${new}" -gt "${max}" ] && new="${max}"
+		current="${new}"
+		;;
+	down)
+		new=$((current - step))
+		[ "${new}" -lt 0 ] && new=0
+		current="${new}"
+		;;
+	*)
+		# Output icon and brightness
+		echo "${icon} ${percentage}%"
+		;;
+esac
+
+echo "${current}" > "${backlight}/brightness"
+
