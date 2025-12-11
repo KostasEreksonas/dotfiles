@@ -1,0 +1,11 @@
+#!/bin/sh
+
+if ! which lsusb 2>/dev/null 1>&2; then
+	echo "Missing package: lsusb"
+else
+	if lsusb | grep -q "DisplayLink"; then
+		cp "${HOME}/Documents/git/dotfiles/.xinitrc_work" "${HOME}/.xinitrc"
+	else
+		cp "${HOME}/Documents/git/dotfiles/.xinitrc" "${HOME}/.xinitrc"
+	fi
+fi

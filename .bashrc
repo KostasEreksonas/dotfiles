@@ -24,7 +24,7 @@ alias listNetworks="nmcli device wifi list"
 # | Exports |
 #  ---------
 
-export PATH=$PATH:/home/kostas/.local/bin # Add custom binary path
+export PATH=$PATH:/home/kostas/.local/bin/ # Add custom binary path
 export TERMINAL=st # Export $TERMINAL variable
 export EDITOR=nvim
 #export -p SSLKEYLOGFILE=~/ssl-key.log # Log ssl keys
@@ -39,7 +39,7 @@ source ~/pureline/pureline ~/.pureline.conf
 # | Games |
 #  -------
 
-alias pcsx2-qt="ENABLE_VKBASALT=1 pcsx2-qt" # Enable shaders via vkBasalt for pcsx2
+#alias pcsx2-qt="ENABLE_VKBASALT=1 pcsx2-qt" # Enable shaders via vkBasalt for pcsx2
 
 
 
@@ -51,5 +51,5 @@ RANGER_LOAD_DEFAULT_RC=FALSE
 
 # Autostart X on login
 if [[ -z $DISPLAY && $XDG_VTNR -eq 1 ]]; then
-	startx
+	display_config && startx
 fi
