@@ -59,7 +59,7 @@ xrandr --setprovideroutputsource 1 0 2>/dev/null
 sleep 1
 
 # Extend displays on WM startup
-xrandr --output eDP-1 --auto --output DVI-I-3-2 --right-of eDP-1 --auto --output DVI-I-2-1 --left-of eDP-1 --auto
+xrandr --output eDP-1 --auto --output DVI-I-3-2 --left-of eDP-1 --auto --output DVI-I-2-1 --left-of DVI-I-3-2 --auto
 
 # Desktop background image
 feh --bg-fill /usr/share/pixmaps/background.jpg &
