@@ -24,7 +24,7 @@ alias listNetworks="nmcli device wifi list"
 # | Exports |
 #  ---------
 
-export PATH=$PATH:/home/kostas/.local/bin/ # Add custom binary path
+export PATH=$PATH:/home/kostas/.local/bin/:/usr/lib/packettracer/ # Add custom binary path
 export TERMINAL=st # Export $TERMINAL variable
 export EDITOR=nvim
 #export -p SSLKEYLOGFILE=~/ssl-key.log # Log ssl keys
@@ -53,3 +53,4 @@ RANGER_LOAD_DEFAULT_RC=FALSE
 if [[ -z $DISPLAY && $XDG_VTNR -eq 1 ]]; then
 	display_config && startx
 fi
+. "$HOME/.cargo/env"
