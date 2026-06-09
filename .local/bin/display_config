@@ -5,7 +5,9 @@ if ! which lsusb 2>/dev/null 1>&2; then
 else
 	if lsusb | grep -q "DisplayLink"; then
 		cp "${HOME}/Documents/git/dotfiles/.xinitrc_work" "${HOME}/.xinitrc"
+		cp "${HOME}/Documents/git/dotfiles/.xprofile_work" "${HOME}/.xprofile"
 	else
 		cp "${HOME}/Documents/git/dotfiles/.xinitrc" "${HOME}/.xinitrc"
+		cp "${HOME}/Documents/git/dotfiles/.xprofile" "${HOME}/.xprofile"
 	fi
 fi

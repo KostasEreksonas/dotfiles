@@ -53,13 +53,13 @@ fi
 [ -f ~/.xprofile ] && . ~/.xprofile
 
 # Link DisplayLink providers to NVIDIA (adjust IDs from xrandr --listproviders)
-xrandr --setprovideroutputsource 1 0 2>/dev/null
+xrandr --setprovideroutputsource 2 0 2>/dev/null
 
 # Small delay to let DisplayLink settle
 sleep 1
 
 # Extend displays on WM startup
-xrandr --output eDP-1 --auto --output DVI-I-3-2 --left-of eDP-1 --auto --output DVI-I-2-1 --left-of DVI-I-3-2 --auto
+xrandr --output eDP1 --auto --output DVI-I-1-1 --left-of eDP1 --auto --output DVI-I-2-2 --left-of DVI-I-1-1 --auto
 
 # Desktop background image
 feh --bg-fill /usr/share/pixmaps/background.jpg &
