@@ -1,0 +1,257 @@
+#!/bin/sh
+
+# This script is intended to:
+# Automate CA certificate injection into Android System Trust Store
+# Download and install frida-server onto the Android device (/data/local/tmp/ directory)
+# Usage: ./proxy_setup <certificate> <URL for frida-server>
+
+delimiter="================================================================"
+
+#  -----------
+# | Functions |
+#  -----------
+
+dependency_checks() {
+	if ! which openssl 2>/dev/null 1>&2
+	then
+		printf "%s\n" "${delimiter}"
+		printf "Openssl not installed.\n"
+		printf "%s\n" "${delimiter}"
+		exit 1
+	elif ! which adb 2>/dev/null 1>&2
+	then
+		printf "%s\n" "${delimiter}"
+		printf "android-tools not installed.\n"
+		printf "%s\n" "${delimiter}"
+		exit 1
+	elif ! which wget 2>/dev/null 1>&2
+	then
+		printf "%s\n" "${delimiter}"
+		printf "wget not installed\n"
+		printf "%s\n" "${delimiter}"
+		exit 1
+	else
+		printf "%s\n" "${delimiter}"
+		printf "All dependencies installed\n"
+		printf "%s\n" "${delimiter}"
+	fi
+}
+
+argument_checks() {
+	# Check the validity of provided command line arguments
+	# Regex source - https://stackoverflow.com/a/55267709
+	# Posted by Patrick Steil
+	# Retrieved 2026-07-16
+	# License - CC BY-SA 4.0
+
+	regex='^(https?|ftp|file)://[-A-Za-z0-9\+&@#/%?=~_|!:,.;]*[-A-Za-z0-9\+&@#/%=~_|]\.[-A-Za-z0-9\+&@#/%?=~_|!:,.;]*[-A-Za-z0-9\+&@#/%=~_|]$' # Regex to match a valid URL
+	cert="${1}" # Name of a certificate file
+	ext="${1##*.}" # Get extension of the full filename
+	url="${2}" # Given URL for frida-server
+
+	if ! [[ "${ext}" == "der" || "${ext}" == "pem" ]]
+	then
+		printf "%s\n" "${delimiter}"
+		printf "%s is not a valid certificate file\n" "${cert}"
+		printf "%s\n" "${delimiter}"
+		exit 1
+	elif ! [[ "${url}" =~ "${regex}" ]] && [[ $(echo "${url}" | grep -i frida-server) == "" ]]
+	then
+		printf "%s\n" "${delimiter}"
+		printf "%s is not a valid URL for frida-server\n" "${url}"
+		printf "%s\n" "${delimiter}"
+		exit 1
+	fi
+}
+
+rename_pem_cert() {
+	local cert="${1}"
+	cert_hash=$(openssl x509 -inform PEM -subject_hash_old -in ${cert} | head -1)
+	cp "${cert}" "${cert_hash}.0"
+	printf "%s\n" "${delimiter}"
+	printf "%s certificate renamed to %s.0\n" "${cert}" "${cert_hash}"
+	printf "%s\n" "${delimiter}"
+}
+
+inject_certificates() {
+	# Android security certificate injection script, adapted from httptoolkit
+	local cert=${1}
+	# Create a separate temp directory, to hold the current certificates
+	# Without this, when we add the mount we can't read the current certs anymore.
+	adb shell "su -c 'mkdir -p -m 700 /data/local/tmp/htk-ca-copy'"
+
+	# Copy out the existing certificates
+	adb shell "su -c 'cp /system/etc/security/cacerts/* /data/local/tmp/htk-ca-copy/'"
+
+	# Create the in-memory mount on top of the system certs folder
+	adb shell "su -c 'mount -t tmpfs tmpfs /system/etc/security/cacerts'"
+
+	# Copy the existing certs back into the tmpfs mount, so we keep trusting them
+	adb shell "su -c 'mv /data/local/tmp/htk-ca-copy/* /system/etc/security/cacerts/'"
+
+	# Copy our new cert in, so we trust that too
+	adb shell "su -c 'mv /sdcard/${cert} /system/etc/security/cacerts/'"
+
+	# Update the perms & selinux context labels, so everything is as readable as before
+	adb shell "su -c 'chown root:root /system/etc/security/cacerts/*'"
+	adb shell "su -c 'chmod 644 /system/etc/security/cacerts/*'"
+	adb shell "su -c 'chcon u:object_r:system_file:s0 /system/etc/security/cacerts/*'"
+
+	# Delete the temp cert directory
+	adb shell "su -c 'rm -r /data/local/tmp/htk-ca-copy'"
+}
+
+setup_frida() {
+	url="${1}"
+	archive_name=$(echo "${url}" | rev | cut -d "/" -f 1 | rev)
+	downloaded_binary_name=$(echo "${archive_name}" | rev | cut -d "." -f 2- | rev)
+	uploaded_binary_name="frida-server"
+	cpu_architecture=$(adb shell getprop ro.product.cpu.abi)
+
+	if [[ "${cpu_architecture}" == "arm64-v8a" ]]
+	then
+		printf "%s\n" "${delimiter}"
+		wget -q "${url}"
+		printf "Downloaded %s from %s\n" "${archive_name}" "${url}"
+		printf "%s\n" "${delimiter}"
+
+		printf "%s\n" "${delimiter}"
+		unxz "${archive_name}"
+		printf "Unzipped %s\n" "${archive_name}"
+		printf "%s\n" "${delimiter}"
+
+		printf "%s\n" "${delimiter}"
+		mv "${downloaded_binary_name}" "${uploaded_binary_name}"
+		printf "Renamed %s to %s\n" "${downloaded_binary_name}" "${uploaded_binary_name}"
+		printf "%s\n" "${delimiter}"
+
+		printf "%s\n" "${delimiter}"
+		chmod +x "${uploaded_binary_name}"
+		printf "Make %s executable\n" "${uploaded_binary_name}"
+		printf "%s\n" "${delimiter}"
+
+		printf "%s\n" "${delimiter}"
+		adb push -q "${uploaded_binary_name}" /data/local/tmp/
+		printf "Push %s to Android device\n" "${uploaded_binary_name}"
+		printf "%s\n" "${delimiter}"
+
+		printf "%s\n" "${delimiter}"
+		adb shell "chmod 755 /data/local/tmp/"${uploaded_binary_name}""
+		printf "Update %s permissions on Android device\n" "${uploaded_binary_name}"
+		printf "%s\n" "${delimiter}"
+
+		printf "%s\n" "${delimiter}"
+		printf "Setup of %s complete\n" "${uploaded_binary_name}"
+		printf "%s\n" "${delimiter}"
+	else
+		printf "%s\n" "${delimiter}"
+		printf "Architecture mismatch - %s given, arm64-v8a needed\n" "${cpu_architecture}"
+		printf "%s\n" "${delimiter}"
+	fi
+}
+
+start_frida() {
+	# Start frida-server and background the process
+	adb shell "su -c 'nohup /data/local/tmp/frida-server >/dev/null 2>&1 &'"
+
+	# Check if frida-server process is active
+	process=$(adb shell "ps -A | grep frida")
+	if [[ "${process}" == "" ]]
+	then
+		printf "%s\n" "${delimiter}"
+		printf "Frida-server process is not active\n"
+		printf "%s\n" "${delimiter}"
+	else
+		printf "%s\n" "${delimiter}"
+		printf "Frida-server process is active\n"
+		printf "%s\n" "${delimiter}"
+	fi
+}
+
+#  -----------
+# | Main flow |
+#  -----------
+
+if [ "${#}" -ne 2 ] # Exactly 2 command line arguments should be provided as an input
+then
+	printf "%s\n" "${delimiter}"
+	printf "2 arguments needed, %d given. Usage: proxy_setup <certificate> <frida-server URL>\n" "${#}"
+	printf "%s\n" "${delimiter}"
+	exit 1
+else
+	argument_checks "${1}" "${2}"
+fi
+
+dependency_checks # Check if necessary dependencies are installed
+
+# Convert and rename certificates into an accepted format for Android System Trust Store
+if [[ "${ext}" == "der" ]]
+then
+	# Certificate name after conversion
+	out="${1%.*}.pem"
+	openssl x509 -inform DER -in "${1}" -out "${out}"
+	printf "%s\n" "${delimiter}"
+	printf "%s certificate converted to %s.pem\n" "${1}" "${1%.*}"
+	printf "%s\n" "${delimiter}"
+	rename_pem_cert "${out}"
+elif [[ "${ext}" == "pem" ]]
+then
+	rename_pem_cert "${1}"
+fi
+
+# Check if Android device is connected
+devices=$(adb devices | tail -2 | head -1)
+if [[ "${devices}" == "List of devices attached" ]]
+then
+	printf "%s\n" "${delimiter}"
+	printf "No device connected\n"
+	printf "%s\n" "${delimiter}"
+	exit 1
+else
+	# Name of a PEM certificate, in <certificate-hash>.0 format for Android's System Trust Store
+	cert_name_final=$(echo "${cert_hash}.0")
+
+	# Push certificate onto Android device
+	adb push "${cert_name_final}" /sdcard/ 2>/dev/null
+	if [[ "${?}" -eq 0 ]] # ${?} - exit status of last executed command. 0 - successful execution.
+	then
+		printf "%s\n" "${delimiter}"
+		printf "Pushed %s onto Android device\n" "${cert_name_final}"
+		printf "%s\n" "${delimiter}"
+
+		inject_certificates "${cert_name_final}"
+
+		status_check=$(adb shell "su -c 'ls /system/etc/security/cacerts/${cert_name_final}'")
+		if [[ "${status_check}" == "" ]]
+		then
+			printf "%s\n" "${delimiter}"
+			printf "%s certificate injection has failed\n" "${cert_name_final}"
+			printf "%s\n" "${delimiter}"
+		else
+			printf "%s\n" "${delimiter}"
+			printf "%s certificate injection has been successful\n" "${cert_name_final}"
+			printf "%s\n" "${delimiter}"
+		fi
+	else
+		printf "%s\n" "${delimiter}"
+		printf "Pushing %s onto Android device failed\n" "${cert_name_final}"
+		printf "%s\n" "${delimiter}"
+	fi
+fi
+
+# Install frida-server on Android device
+frida_check=$(adb shell "ls /data/local/tmp/frida-server 2>/dev/null" || echo "${?}")
+if [[ "${frida_check}" == 1 ]]
+then
+	printf "%s\n" "${delimiter}"
+	printf "Frida-server not installed\n"
+	printf "%s\n" "${delimiter}"
+
+	setup_frida "${2}" && start_frida
+else
+	printf "%s\n" "${delimiter}"
+	printf "Frida-server already installed\n"
+	printf "%s\n" "${delimiter}"
+
+	start_frida
+fi
