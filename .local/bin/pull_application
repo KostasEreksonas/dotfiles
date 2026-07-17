@@ -1,0 +1,81 @@
+#!/bin/sh
+
+# Usage: pull_application <(partial) application-name>
+
+delimiter="================================================================"
+
+#  -----------
+# | Functions |
+#  -----------
+
+dependency_checks() {
+	if ! which adb 2>/dev/null 1>&2
+    then
+        printf "%s\n" "${delimiter}"
+        printf "android-tools not installed.\n"
+        printf "%s\n" "${delimiter}"
+        exit 1
+	fi
+}
+
+filter_apk_name() {
+	# Match a partial apk name to the name of a single Android application
+	local package_list="${1}"
+	local package_count="${2}"
+
+	if [ "${package_count}" -eq 1 ]
+	then
+		printf "%s\n" "${delimiter}"
+		printf "Found package: %s\n" "${package_list}"
+		printf "%s\n" "${delimiter}"
+	else
+		printf "%s\n" "${delimiter}"
+		printf "Found packages:\n"
+		printf "%s\n" "${package_list}"
+		printf "Total packages found: %d. Please narrow your search into a single package\n" "${package_count}"
+		printf "%s\n" "${delimiter}"
+		exit 1
+	fi
+}
+
+pull_apks() {
+	local package_name="${1}"
+	for path in $(adb shell pm path "${package_name}")
+	do
+		path=$(echo ${path} | cut -d ":" -f 2-) # Remove 'package:' prefix
+		adb pull "${path}"
+	done
+}
+
+#  -----------
+# | Main flow |
+#  -----------
+
+dependency_checks
+
+if [ "${#}" -ne 1 ]
+then
+	printf "%s\n" "${delimiter}"
+	printf "1 argument needed, %d provided. Usage: pull_application <(partial) application-name>\n" "${#}"
+	printf "%s\n" "${delimiter}"
+	exit 1
+fi
+
+# Filter for the name of application to pull
+package_list=$(adb shell pm list packages | grep "${1}")
+package_count=$(echo "${package_list}" | wc -l)
+
+filter_apk_name "${package_list}" "${package_count}"
+
+# Get all available apks for the selected application
+package_name=$(echo "${package_list}" | cut -d ":" -f 2)
+printf "%s\n" "${delimiter}"
+printf "Associated packages:\n"
+adb shell pm path "${package_name}"
+printf "%s\n" "${delimiter}"
+
+# Pull associated packages to computer:
+printf "%s\n" "${delimiter}"
+printf "Pulling associated apks:\n"
+pull_apks "${package_name}"
+printf "%s\n" "${delimiter}"
