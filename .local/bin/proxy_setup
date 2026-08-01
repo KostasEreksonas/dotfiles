@@ -3,7 +3,7 @@
 # This script is intended to:
 # Automate CA certificate injection into Android System Trust Store
 # Download and install frida-server onto the Android device (/data/local/tmp/ directory)
-# Usage: ./proxy_setup <certificate> <URL for frida-server>
+# Usage: ./proxy_setup <certificate>
 
 delimiter="================================================================"
 
@@ -39,15 +39,9 @@ dependency_checks() {
 
 argument_checks() {
 	# Check the validity of provided command line arguments
-	# Regex source - https://stackoverflow.com/a/55267709
-	# Posted by Patrick Steil
-	# Retrieved 2026-07-16
-	# License - CC BY-SA 4.0
 
-	regex='^(https?|ftp|file)://[-A-Za-z0-9\+&@#/%?=~_|!:,.;]*[-A-Za-z0-9\+&@#/%=~_|]\.[-A-Za-z0-9\+&@#/%?=~_|!:,.;]*[-A-Za-z0-9\+&@#/%=~_|]$' # Regex to match a valid URL
 	cert="${1}" # Name of a certificate file
 	ext="${1##*.}" # Get extension of the full filename
-	url="${2}" # Given URL for frida-server
 
 	if ! [[ "${ext}" == "der" || "${ext}" == "pem" ]]
 	then
@@ -55,12 +49,32 @@ argument_checks() {
 		printf "%s is not a valid certificate file\n" "${cert}"
 		printf "%s\n" "${delimiter}"
 		exit 1
-	elif ! [[ "${url}" =~ "${regex}" ]] && [[ $(echo "${url}" | grep -i frida-server) == "" ]]
+	fi
+}
+
+url_checks() {
+	# Regex source - https://stackoverflow.com/a/55267709
+	# Posted by Patrick Steil
+	# Retrieved 2026-07-16
+	# License - CC BY-SA 4.0
+
+	regex='^(https?|ftp|file)://[-A-Za-z0-9\+&@#/%?=~_|!:,.;]*[-A-Za-z0-9\+&@#/%=~_|]\.[-A-Za-z0-9\+&@#/%?=~_|!:,.;]*[-A-Za-z0-9\+&@#/%=~_|]$' # Regex to match a valid URL
+	url="${1}" # Given URL for frida-server
+
+	if ! [[ $url =~ $regex ]]
 	then
-		printf "%s\n" "${delimiter}"
+		printf "%s is not a valid URL\n" "${url}"
+		return 1
+	elif [[ $(echo "${url}" | grep -i frida-server) == "" ]]
+	then
 		printf "%s is not a valid URL for frida-server\n" "${url}"
-		printf "%s\n" "${delimiter}"
-		exit 1
+		return 1
+	elif [[ $(echo "${url}" | grep -i android-arm64) == "" ]]
+	then
+		printf "%s is not a valid URL for frida-server targeted at Android arm64 architecture\n" "${url}"
+		return 1
+	else
+		return 0
 	fi
 }
 
@@ -111,6 +125,7 @@ setup_frida() {
 	if [[ "${cpu_architecture}" == "arm64-v8a" ]]
 	then
 		printf "%s\n" "${delimiter}"
+		printf "Downloading %s from %s\n" "${archive_name}" "${url}"
 		wget -q "${url}"
 		printf "Downloaded %s from %s\n" "${archive_name}" "${url}"
 		printf "%s\n" "${delimiter}"
@@ -172,14 +187,14 @@ start_frida() {
 # | Main flow |
 #  -----------
 
-if [ "${#}" -ne 2 ] # Exactly 2 command line arguments should be provided as an input
+if [ "${#}" -ne 1 ] # Exactly 2 command line arguments should be provided as an input
 then
 	printf "%s\n" "${delimiter}"
-	printf "2 arguments needed, %d given. Usage: proxy_setup <certificate> <frida-server URL>\n" "${#}"
+	printf "1 argument needed, %d given. Usage: proxy_setup <certificate>\n" "${#}"
 	printf "%s\n" "${delimiter}"
 	exit 1
 else
-	argument_checks "${1}" "${2}"
+	argument_checks "${1}"
 fi
 
 dependency_checks # Check if necessary dependencies are installed
@@ -245,9 +260,15 @@ if [[ "${frida_check}" == 1 ]]
 then
 	printf "%s\n" "${delimiter}"
 	printf "Frida-server not installed\n"
+	# Provide a valid URL for frida-server (from Frida Github releases)
+	read -p "Please provide URL for frida server: " frida_url && url_checks "${frida_url}"
+	until [[ "${?}" -eq 0 ]]
+	do
+		read -p "Please provide URL for frida server: " frida_url && url_checks "${frida_url}"
+	done
 	printf "%s\n" "${delimiter}"
 
-	setup_frida "${2}" && start_frida
+	setup_frida "${frida_url}" && start_frida
 else
 	printf "%s\n" "${delimiter}"
 	printf "Frida-server already installed\n"
