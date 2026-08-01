@@ -1,0 +1,86 @@
+#!/bin/sh
+
+# Attach frida objection onto Android application
+# Usage: ./attach <app-name>
+
+delimiter="================================================================"
+
+#  -----------
+# | Functions |
+#  -----------
+
+dependency_checks() {
+	# Check if dependencies are installed
+
+	if ! which uv 2>/dev/null 1>&2
+	then
+		printf "%s\n" "${delimiter}"
+		printf "uv not installed\n"
+		printf "%s\n" "${delimiter}"
+		exit 1
+	elif [[ $(find . -maxdepth 1 -type f -name uv.lock) == "" ]]
+	then
+		printf "%s\n" "${delimiter}"
+		printf "No uv.lock present for this project. Please initialize the project using uv init\n";
+		printf "%s\n" "${delimiter}"
+		exit 1
+	elif [[ $(uv tool list | grep frida-tools) == "" ]]
+	then
+		printf "%s\n" "${delimiter}"
+		printf "frida-tools not installed. Install it with uv tool install frida-tools\n"
+		printf "%s\n" "${delimiter}"
+		exit 1
+	elif [[ $(uv tool list | grep objection) == "" ]]
+	then
+		printf "%s\n" "${delimiter}"
+		printf "Frida objection not installed. Install it with uv tool install objection\n"
+		printf "%s\n" "${delimiter}"
+		exit 1
+	fi
+}
+
+attach_process() {
+	# Attach process to objection
+	pid="${1}"
+	uv run objection -g "${pid}" explore
+}
+
+#  ---------------
+# | Prerequisites |
+#  ---------------
+
+if [[ "${#}" -ne 1 ]] # ${#} - CMD argument count
+then
+	printf "1 argument needed, %d given. Usage: ./attach <app-name>\n" "${#}"
+	exit 1
+else
+	name="${1}"
+fi
+
+dependency_checks
+
+#  -----------
+# | Main Flow |
+#  -----------
+
+process=$(frida-ps -U | grep -i ${name})
+process_count=$(echo "${process}" | wc -l)
+
+if [[ "${process_count}" -ne 1 ]]
+then
+	printf "%d processes found. Please narrow your search into a single process\n" "${process_count}"
+	exit 1
+else
+	pid=$(echo ${process} | cut -d " " -f 1)
+	process_name=$(echo ${process} | cut -d " " -f 2)
+	printf "Found process %s with pid %d\n" "${process_name}" "${pid}"
+	while true
+	do
+		read -p "Do you want to attach the process to frida objection? [Y/N] " choice
+		case "${choice}" in
+			[Yy]* ) attach_process "${pid}" break ;;
+			[Nn]* ) exit 1 ;;
+			* ) printf "Select Y/N\n"
+		esac
+	done
+fi
