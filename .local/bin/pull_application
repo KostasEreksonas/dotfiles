@@ -23,7 +23,13 @@ filter_apk_name() {
 	local package_list="${1}"
 	local package_count="${2}"
 
-	if [ "${package_count}" -eq 1 ]
+	if [ "${package_count}" -eq 0 ]
+	then
+		printf "%s\n" "${delimiter}"
+		printf "No packages found. Aborting...\n"
+		printf "%s\n" "${delimiter}"
+		exit 1
+	elif [ "${package_count}" -eq 1 ]
 	then
 		printf "%s\n" "${delimiter}"
 		printf "Found package: %s\n" "${package_list}"
@@ -63,8 +69,13 @@ fi
 
 # Filter for the name of application to pull
 package_list=$(adb shell pm list packages | grep "${1}")
-package_count=$(echo "${package_list}" | wc -l)
 
+if [[ "${package_list}" == "" ]]
+then
+	package_count=0
+else
+	package_count=$(echo "${package_list}" | wc -l)
+fi
 filter_apk_name "${package_list}" "${package_count}"
 
 # Get all available apks for the selected application
