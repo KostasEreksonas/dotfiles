@@ -4,9 +4,9 @@ Custom configs and scripts for a tiling WM (dwm) based Linux installation.
 
 Table of Contents
 =================
-* [Software](#Software)
+* [Configs](#Configs)
 
-# Software
+# Configs
 
 Following is the list of software that I have configured for dwm:
 
