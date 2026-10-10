@@ -8,15 +8,7 @@ sysmodmap=/etc/X11/xinit/.Xmodmap
 # merge in defaults and keymaps
 
 if [ -f $sysresources ]; then
-
-
-
-
-
-
-
     xrdb -merge $sysresources
-
 fi
 
 if [ -f $sysmodmap ]; then
@@ -24,15 +16,7 @@ if [ -f $sysmodmap ]; then
 fi
 
 if [ -f "$userresources" ]; then
-
-
-
-
-
-
-
     xrdb -merge "$userresources"
-
 fi
 
 if [ -f "$usermodmap" ]; then
@@ -53,13 +37,13 @@ fi
 [ -f ~/.xprofile ] && . ~/.xprofile
 
 # Link DisplayLink providers to NVIDIA (adjust IDs from xrandr --listproviders)
-xrandr --setprovideroutputsource 2 0 2>/dev/null
+xrandr --setprovideroutputsource 1 0 2>/dev/null
 
 # Small delay to let DisplayLink settle
 sleep 1
 
 # Extend displays on WM startup
-xrandr --output eDP1 --auto --output DVI-I-1-1 --left-of eDP1 --auto --output DVI-I-2-2 --left-of DVI-I-1-1 --auto
+xrandr --output eDP1 --auto --output DVI-I-3-2 --left-of eDP1 --auto --output DVI-I-2-1 --left-of DVI-I-3-2 --auto
 
 # Desktop background image
 feh --bg-fill /usr/share/pixmaps/background.jpg &

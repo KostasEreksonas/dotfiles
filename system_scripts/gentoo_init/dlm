@@ -1,0 +1,20 @@
+#!/sbin/openrc-run
+
+description="DisplayLink Manager Service"
+supervisor="supervise-daemon"
+command="/opt/displaylink/DisplayLinkManager"
+directory="/opt/displaylink"
+rc_need="modules"
+
+depend() {
+    need localmount
+    after udev
+}
+
+start_pre() {
+    # Ensure the evdi kernel module is loaded before starting the daemon
+    if ! modinfo evdi >/dev/null 2>&1; then
+        echo "evdi module not found. Please compile it for your current kernel."
+	return 1
+    fi
+}
