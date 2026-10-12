@@ -7,10 +7,10 @@
 # Variables
 locker="slock"						# Put your screen locker utility there. In my case it is slock.
 logout="pkill dwm"					# Put a command to logout from DE/WM session here.
-suspend="systemctl suspend"			# Put a command to suspend DE/WM session here.
-hibernate="systemctl hibernate"		# Put a command to suspend DE/WM session here.
-reboot="reboot"						# Put a command to reboot a machine here.
-shutdown="shutdown now"				# Put a command to shutdown a machine here.
+suspend="loginctl suspend"			# Put a command to suspend DE/WM session here.
+hibernate="loginctl hibernate"		# Put a command to suspend DE/WM session here.
+reboot="loginctl reboot"			# Put a command to reboot a machine here.
+shutdown="loginctl poweroff"		# Put a command to shutdown a machine here.
 
 if [ -z $1 ]; then
 	printf "System (l) lock, (e) logout, (s) suspend, (h) hibernate, (r) reboot, (S) shutdown\n"
