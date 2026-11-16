@@ -53,7 +53,7 @@ fi
 [ -f ~/.xprofile ] && . ~/.xprofile
 
 # Extend displays on WM startup
-xrandr --output eDP-1 --auto --output HDMI-1-0 --right-of eDP-1 --auto
+xrandr --output eDP-1-1 --auto --output HDMI-0 --right-of eDP-1-1 --auto
 
 # Desktop background image
 feh --bg-fill /usr/share/pixmaps/background.jpg &
